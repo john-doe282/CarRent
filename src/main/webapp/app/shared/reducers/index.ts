@@ -28,6 +28,10 @@ import type, {
 import car, {
   CarState
 } from 'app/entities/car/car.reducer';
+// prettier-ignore
+import activeRent, {
+  ActiveRentState
+} from 'app/entities/active-rent/active-rent.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -45,6 +49,7 @@ export interface IRootState {
   readonly model: ModelState;
   readonly type: TypeState;
   readonly car: CarState;
+  readonly activeRent: ActiveRentState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -64,6 +69,7 @@ const rootReducer = combineReducers<IRootState>({
   model,
   type,
   car,
+  activeRent,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar,
 });

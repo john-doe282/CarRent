@@ -1,0 +1,39 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "client",
+      "otherEntityName": "user",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "login",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "activeRent"
+    },
+    {
+      "relationshipName": "car",
+      "otherEntityName": "car",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "pricePerHour",
+      "otherEntityRelationshipName": "activeRent"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "duration",
+      "fieldType": "Duration",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "changelogDate": "20201226092348",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "serviceClass",
+  "entityTableName": "active_rent",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}

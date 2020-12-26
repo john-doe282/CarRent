@@ -8,6 +8,7 @@ import Location from './location';
 import Model from './model';
 import Type from './type';
 import Car from './car';
+import ActiveRent from './active-rent';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -18,6 +19,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}model`} component={Model} />
       <ErrorBoundaryRoute path={`${match.url}type`} component={Type} />
       <ErrorBoundaryRoute path={`${match.url}car`} component={Car} />
+      <ErrorBoundaryRoute path={`${match.url}active-rent`} component={ActiveRent} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>

@@ -54,6 +54,7 @@ public class CacheConfiguration {
             createCache(cm, com.andrew.rental.domain.Model.class.getName());
             createCache(cm, com.andrew.rental.domain.Type.class.getName());
             createCache(cm, com.andrew.rental.domain.Car.class.getName());
+            createCache(cm, com.andrew.rental.domain.ActiveRent.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
