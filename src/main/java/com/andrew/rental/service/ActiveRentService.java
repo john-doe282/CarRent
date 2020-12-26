@@ -32,12 +32,16 @@ public class ActiveRentService {
 
     private final CarService carService;
 
+    private final UserService userService;
+
     public ActiveRentService(ActiveRentRepository activeRentRepository,
                              PaymentService paymentService,
-                             CarService carService) {
+                             CarService carService,
+                             UserService userService) {
         this.activeRentRepository = activeRentRepository;
         this.paymentService = paymentService;
         this.carService = carService;
+        this.userService = userService;
     }
 
     private final double tax = 0.3;
@@ -49,9 +53,16 @@ public class ActiveRentService {
      * @return the persisted entity.
      */
     public ActiveRent rent(ActiveRent activeRent) throws IllegalAccessException {
-        User client = activeRent.getClient();
-        Car car = activeRent.getCar();
 
+
+        Long carId = activeRent.getCar().getId();
+        Long clientId = activeRent.getClient().getId();
+
+//        User client = userService.;
+        User client = userService.getUserById(clientId).get();
+        Car car = carService.getCarById(carId).get();
+
+//        Long cl
         if (car.getStatus() != CarStatus.AVAILABLE) {
             throw new IllegalAccessException("The car is not available");
         }

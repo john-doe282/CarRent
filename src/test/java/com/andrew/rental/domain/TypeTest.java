@@ -2,7 +2,7 @@ package com.andrew.rental.domain;
 
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-import com.andrew.rental.web.rest.TestUtil;
+import com.andrew.rental.controller.TestUtil;
 
 public class TypeTest {
 

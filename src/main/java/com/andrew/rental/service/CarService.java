@@ -65,7 +65,7 @@ public class CarService {
      * @return the entity.
      */
     @Transactional(readOnly = true)
-    public Optional<Car> findOne(Long id) {
+    public Optional<Car> getCarById(Long id) {
         log.debug("Request to get Car : {}", id);
         return carRepository.findById(id);
     }

@@ -75,6 +75,22 @@ export const SettingsPage = (props: IUserSettingsProps) => {
               }}
               value={props.account.email}
             />
+            <AvField
+              className="form-control"
+              name="iban"
+              label="iban"
+              id="iban"
+              placeholder="Your iban"
+              value={props.account.iban}
+            />
+            <AvField
+              className="form-control"
+              name="Driver's licence"
+              label="Driver's licence"
+              id="licence"
+              placeholder="Your licence"
+              value={props.account.licence}
+            />
             <Button color="primary" type="submit">
               Save
             </Button>

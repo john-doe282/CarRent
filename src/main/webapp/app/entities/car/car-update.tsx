@@ -60,7 +60,7 @@ export const CarUpdate = (props: ICarUpdateProps) => {
         ...carEntity,
         ...values,
       };
-
+      entity.owner = users[0]
       if (isNew) {
         props.createEntity(entity);
       } else {
@@ -185,26 +185,6 @@ export const CarUpdate = (props: ICarUpdateProps) => {
                     ? locations.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.district}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-                <AvFeedback>This field is required.</AvFeedback>
-              </AvGroup>
-              <AvGroup>
-                <Label for="car-owner">Owner</Label>
-                <AvInput
-                  id="car-owner"
-                  type="select"
-                  className="form-control"
-                  name="owner.id"
-                  value={isNew ? users[0] && users[0].id : carEntity.owner?.id}
-                  required
-                >
-                  {users
-                    ? users.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.login}
                         </option>
                       ))
                     : null}

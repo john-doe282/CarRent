@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity ActiveRent.
+    -->
+    <changeSet id="20201226092378-2" author="jhipster">
+        <dropColumn tableName="jhi_user" columnName="iban"/>
+        <dropColumn tableName="jhi_user" columnName="licence"/>
+        <addColumn tableName="jhi_user">
+            <column name="iban" type="varchar(32)">
+                <constraints unique="true" uniqueConstraintName="ux_user_iban"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="jhi_user">
+            <column name="licence" type="varchar(32)">
+                <constraints unique="true" uniqueConstraintName="ux_user_licence"/>
+            </column>
+        </addColumn>
+
+    </changeSet>
+</databaseChangeLog>
