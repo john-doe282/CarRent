@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
-
+import AvailableCar from './available-car';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 
@@ -19,6 +19,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}model`} component={Model} />
       <ErrorBoundaryRoute path={`${match.url}type`} component={Type} />
       <ErrorBoundaryRoute path={`${match.url}car`} component={Car} />
+      <ErrorBoundaryRoute path={`${match.url}available-car`} component={AvailableCar} />
       <ErrorBoundaryRoute path={`${match.url}active-rent`} component={ActiveRent} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>

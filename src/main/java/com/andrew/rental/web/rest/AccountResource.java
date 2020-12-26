@@ -5,7 +5,6 @@ import com.andrew.rental.repository.PersistentTokenRepository;
 import com.andrew.rental.domain.User;
 import com.andrew.rental.repository.UserRepository;
 import com.andrew.rental.security.SecurityUtils;
-import com.andrew.rental.service.MailService;
 import com.andrew.rental.service.UserService;
 import com.andrew.rental.service.dto.PasswordChangeDTO;
 import com.andrew.rental.service.dto.UserDTO;
@@ -44,15 +43,12 @@ public class AccountResource {
 
     private final UserService userService;
 
-    private final MailService mailService;
-
     private final PersistentTokenRepository persistentTokenRepository;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, PersistentTokenRepository persistentTokenRepository) {
+    public AccountResource(UserRepository userRepository, UserService userService, PersistentTokenRepository persistentTokenRepository) {
 
         this.userRepository = userRepository;
         this.userService = userService;
-        this.mailService = mailService;
         this.persistentTokenRepository = persistentTokenRepository;
     }
 
@@ -71,7 +67,6 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
-        mailService.sendActivationEmail(user);
     }
 
     /**
@@ -200,7 +195,6 @@ public class AccountResource {
     public void requestPasswordReset(@RequestBody String mail) {
         Optional<User> user = userService.requestPasswordReset(mail);
         if (user.isPresent()) {
-            mailService.sendPasswordResetMail(user.get());
         } else {
             // Pretend the request has been successful to prevent checking which emails really exist
             // but log that an invalid attempt has been made

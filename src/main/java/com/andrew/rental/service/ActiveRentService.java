@@ -1,6 +1,7 @@
 package com.andrew.rental.service;
 
 import com.andrew.rental.domain.ActiveRent;
+import com.andrew.rental.domain.User;
 import com.andrew.rental.repository.ActiveRentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,12 @@ public class ActiveRentService {
     public Page<ActiveRent> findAll(Pageable pageable) {
         log.debug("Request to get all ActiveRents");
         return activeRentRepository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ActiveRent> findAllByUser(Pageable pageable, User user) {
+        log.debug("Request to get all ActiveRents");
+        return activeRentRepository.findAllByClient(pageable, user);
     }
 
 

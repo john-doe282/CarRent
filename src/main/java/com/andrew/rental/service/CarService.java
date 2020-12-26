@@ -1,6 +1,8 @@
 package com.andrew.rental.service;
 
 import com.andrew.rental.domain.Car;
+import com.andrew.rental.domain.User;
+import com.andrew.rental.domain.enumeration.CarStatus;
 import com.andrew.rental.repository.CarRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,5 +73,20 @@ public class CarService {
     public void delete(Long id) {
         log.debug("Request to delete Car : {}", id);
         carRepository.deleteById(id);
+    }
+
+
+    @Transactional(readOnly = true)
+    public Page<Car> findAllAvailable(Pageable pageable) {
+        log.debug("Request to get all Cars");
+
+        return carRepository.findAllByStatus(pageable, CarStatus.AVAILABLE);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Car> findAllByOwner(Pageable pageable, User owner) {
+        log.debug("Request to get all Cars");
+
+        return carRepository.findAllByOwner(pageable, owner);
     }
 }

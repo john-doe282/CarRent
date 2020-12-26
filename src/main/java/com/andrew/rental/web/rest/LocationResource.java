@@ -1,6 +1,7 @@
 package com.andrew.rental.web.rest;
 
 import com.andrew.rental.domain.Location;
+import com.andrew.rental.security.AuthoritiesConstants;
 import com.andrew.rental.service.LocationService;
 import com.andrew.rental.web.rest.errors.BadRequestAlertException;
 
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -46,6 +48,7 @@ public class LocationResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/locations")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Location> createLocation(@Valid @RequestBody Location location) throws URISyntaxException {
         log.debug("REST request to save Location : {}", location);
         if (location.getId() != null) {
@@ -67,6 +70,7 @@ public class LocationResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/locations")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Location> updateLocation(@Valid @RequestBody Location location) throws URISyntaxException {
         log.debug("REST request to update Location : {}", location);
         if (location.getId() == null) {
@@ -109,6 +113,7 @@ public class LocationResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/locations/{id}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteLocation(@PathVariable Long id) {
         log.debug("REST request to delete Location : {}", id);
         locationService.delete(id);

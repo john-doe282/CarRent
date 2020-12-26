@@ -1,4 +1,4 @@
-package com.andrew.rental.service;
+package com.andrew.rental.service.errors;
 
 public class InvalidPasswordException extends RuntimeException {
 

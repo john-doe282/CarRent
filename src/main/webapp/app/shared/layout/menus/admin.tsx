@@ -16,9 +16,6 @@ const adminMenuItems = (
     <MenuItem icon="heart" to="/admin/health">
       Health
     </MenuItem>
-    <MenuItem icon="list" to="/admin/configuration">
-      Configuration
-    </MenuItem>
     <MenuItem icon="bell" to="/admin/audits">
       Audits
     </MenuItem>

@@ -10,6 +10,9 @@ import com.andrew.rental.security.AuthoritiesConstants;
 import com.andrew.rental.security.SecurityUtils;
 import com.andrew.rental.service.dto.UserDTO;
 
+import com.andrew.rental.service.errors.EmailAlreadyUsedException;
+import com.andrew.rental.service.errors.InvalidPasswordException;
+import com.andrew.rental.service.errors.UsernameAlreadyUsedException;
 import io.github.jhipster.security.RandomUtil;
 
 import org.slf4j.Logger;
@@ -47,12 +50,20 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, PersistentTokenRepository persistentTokenRepository, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    private final PoliceService policeService;
+
+    public UserService(UserRepository userRepository,
+                       PasswordEncoder passwordEncoder,
+                       PersistentTokenRepository persistentTokenRepository,
+                       AuthorityRepository authorityRepository,
+                       CacheManager cacheManager,
+                       PoliceService policeService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.persistentTokenRepository = persistentTokenRepository;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.policeService = policeService;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -118,7 +129,7 @@ public class UserService {
         newUser.setImageUrl(userDTO.getImageUrl());
         newUser.setLangKey(userDTO.getLangKey());
         // new user is not active
-        newUser.setActivated(false);
+        newUser.setActivated(policeService.eligible(userDTO));
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();
@@ -158,7 +169,7 @@ public class UserService {
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
-        user.setActivated(true);
+        user.setActivated(policeService.eligible(userDTO));
         if (userDTO.getAuthorities() != null) {
             Set<Authority> authorities = userDTO.getAuthorities().stream()
                 .map(authorityRepository::findById)

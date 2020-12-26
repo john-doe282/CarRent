@@ -1,7 +1,9 @@
 package com.andrew.rental.web.rest;
 
 import com.andrew.rental.domain.Car;
+import com.andrew.rental.domain.User;
 import com.andrew.rental.service.CarService;
+import com.andrew.rental.service.UserService;
 import com.andrew.rental.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -40,8 +42,12 @@ public class CarResource {
 
     private final CarService carService;
 
-    public CarResource(CarService carService) {
+    private final UserService userService;
+
+    public CarResource(CarService carService,
+                       UserService userService) {
         this.carService = carService;
+        this.userService = userService;
     }
 
     /**
@@ -57,6 +63,16 @@ public class CarResource {
         if (car.getId() != null) {
             throw new BadRequestAlertException("A new car cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (!user.isPresent()) {
+            throw new BadRequestAlertException("Log in", ENTITY_NAME, "forbidden");
+        }
+
+        if (!user.get().getLogin().
+            equalsIgnoreCase(car.getOwner().getLogin())) {
+            throw new BadRequestAlertException("Forbidden", ENTITY_NAME, "forbidden");
+        }
+
         Car result = carService.save(car);
         return ResponseEntity.created(new URI("/api/cars/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -78,6 +94,15 @@ public class CarResource {
         if (car.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (!user.isPresent()) {
+            throw new BadRequestAlertException("Log in", ENTITY_NAME, "forbidden");
+        }
+
+        if (!user.get().getLogin().
+            equalsIgnoreCase(car.getOwner().getLogin())) {
+            throw new BadRequestAlertException("Forbidden", ENTITY_NAME, "forbidden");
+        }
         Car result = carService.save(car);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, car.getId().toString()))
@@ -90,10 +115,26 @@ public class CarResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of cars in body.
      */
-    @GetMapping("/cars")
-    public ResponseEntity<List<Car>> getAllCars(Pageable pageable) {
+    @GetMapping("/cars/available")
+    public ResponseEntity<List<Car>> getAllAvailableCars(Pageable pageable) {
         log.debug("REST request to get a page of Cars");
-        Page<Car> page = carService.findAll(pageable);
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (!user.isPresent()) {
+            throw new BadRequestAlertException("Log in", ENTITY_NAME, "forbidden");
+        }
+        Page<Car> page = carService.findAllAvailable(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/cars/owned")
+    public ResponseEntity<List<Car>> getUserCars(Pageable pageable) {
+        log.debug("REST request to get a page of Cars");
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (!user.isPresent()) {
+            throw new BadRequestAlertException("Log in", ENTITY_NAME, "forbidden");
+        }
+        Page<Car> page = carService.findAllByOwner(pageable, user.get());
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -120,7 +161,20 @@ public class CarResource {
     @DeleteMapping("/cars/{id}")
     public ResponseEntity<Void> deleteCar(@PathVariable Long id) {
         log.debug("REST request to delete Car : {}", id);
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (!user.isPresent()) {
+            throw new BadRequestAlertException("Log in", ENTITY_NAME, "forbidden");
+        }
+
+        Car car = carService.findOne(id).get();
+        if (!user.get().getLogin().
+            equalsIgnoreCase(car.getOwner().getLogin())) {
+            throw new BadRequestAlertException("Forbidden", ENTITY_NAME, "forbidden");
+        }
         carService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent().
+            headers(HeaderUtil.createEntityDeletionAlert(
+                applicationName, false,
+                ENTITY_NAME, id.toString())).build();
     }
 }

@@ -15,6 +15,7 @@ import { getEntity, updateEntity, createEntity, reset } from './active-rent.redu
 import { IActiveRent } from 'app/shared/model/active-rent.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import moment from "moment";
 
 export interface IActiveRentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -52,7 +53,8 @@ export const ActiveRentUpdate = (props: IActiveRentUpdateProps) => {
         ...activeRentEntity,
         ...values,
       };
-
+      entity.client = users[0]
+      entity.duration = moment.duration(entity.duration).toISOString()
       if (isNew) {
         props.createEntity(entity);
       } else {
@@ -94,26 +96,6 @@ export const ActiveRentUpdate = (props: IActiveRentUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label for="active-rent-client">Client</Label>
-                <AvInput
-                  id="active-rent-client"
-                  type="select"
-                  className="form-control"
-                  name="client.id"
-                  value={isNew ? users[0] && users[0].id : activeRentEntity.client?.id}
-                  required
-                >
-                  {users
-                    ? users.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.login}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-                <AvFeedback>This field is required.</AvFeedback>
-              </AvGroup>
-              <AvGroup>
                 <Label for="active-rent-car">Car</Label>
                 <AvInput
                   id="active-rent-car"
@@ -126,7 +108,7 @@ export const ActiveRentUpdate = (props: IActiveRentUpdateProps) => {
                   {cars
                     ? cars.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.pricePerHour}
+                          {otherEntity.model.name}
                         </option>
                       ))
                     : null}

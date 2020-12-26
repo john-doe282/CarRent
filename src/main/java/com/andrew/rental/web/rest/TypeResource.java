@@ -1,6 +1,7 @@
 package com.andrew.rental.web.rest;
 
 import com.andrew.rental.domain.Type;
+import com.andrew.rental.security.AuthoritiesConstants;
 import com.andrew.rental.service.TypeService;
 import com.andrew.rental.web.rest.errors.BadRequestAlertException;
 
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -46,6 +48,7 @@ public class TypeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/types")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Type> createType(@Valid @RequestBody Type type) throws URISyntaxException {
         log.debug("REST request to save Type : {}", type);
         if (type.getId() != null) {
@@ -67,6 +70,7 @@ public class TypeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/types")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Type> updateType(@Valid @RequestBody Type type) throws URISyntaxException {
         log.debug("REST request to update Type : {}", type);
         if (type.getId() == null) {
@@ -109,6 +113,7 @@ public class TypeResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/types/{id}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteType(@PathVariable Long id) {
         log.debug("REST request to delete Type : {}", id);
         typeService.delete(id);

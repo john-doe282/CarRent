@@ -4,7 +4,6 @@ import com.andrew.rental.config.Constants;
 import com.andrew.rental.domain.User;
 import com.andrew.rental.repository.UserRepository;
 import com.andrew.rental.security.AuthoritiesConstants;
-import com.andrew.rental.service.MailService;
 import org.springframework.data.domain.Sort;
 import java.util.Collections;
 import com.andrew.rental.service.UserService;
@@ -72,12 +71,10 @@ public class UserResource {
 
     private final UserRepository userRepository;
 
-    private final MailService mailService;
 
-    public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
+    public UserResource(UserService userService, UserRepository userRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
-        this.mailService = mailService;
     }
 
     /**
@@ -106,7 +103,6 @@ public class UserResource {
             throw new EmailAlreadyUsedException();
         } else {
             User newUser = userService.createUser(userDTO);
-            mailService.sendCreationEmail(newUser);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert(applicationName,  "A user is created with identifier " + newUser.getLogin(), newUser.getLogin()))
                 .body(newUser);

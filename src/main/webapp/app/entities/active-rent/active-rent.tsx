@@ -11,6 +11,7 @@ import { IActiveRent } from 'app/shared/model/active-rent.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
+import moment from "moment";
 
 export interface IActiveRentProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -102,7 +103,7 @@ export const ActiveRent = (props: IActiveRentProps) => {
                       {activeRent.id}
                     </Button>
                   </td>
-                  <td>{activeRent.duration}</td>
+                  <td>{moment.duration(activeRent.duration).humanize()}</td>
                   <td>{activeRent.client ? activeRent.client.login : ''}</td>
                   <td>{activeRent.car ? <Link to={`car/${activeRent.car.id}`}>{activeRent.car.pricePerHour}</Link> : ''}</td>
                   <td className="text-right">

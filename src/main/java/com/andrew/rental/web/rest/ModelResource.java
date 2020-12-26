@@ -1,6 +1,7 @@
 package com.andrew.rental.web.rest;
 
 import com.andrew.rental.domain.Model;
+import com.andrew.rental.security.AuthoritiesConstants;
 import com.andrew.rental.service.ModelService;
 import com.andrew.rental.web.rest.errors.BadRequestAlertException;
 
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -46,6 +48,7 @@ public class ModelResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/models")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Model> createModel(@Valid @RequestBody Model model) throws URISyntaxException {
         log.debug("REST request to save Model : {}", model);
         if (model.getId() != null) {
@@ -67,6 +70,7 @@ public class ModelResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/models")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Model> updateModel(@Valid @RequestBody Model model) throws URISyntaxException {
         log.debug("REST request to update Model : {}", model);
         if (model.getId() == null) {
@@ -109,6 +113,7 @@ public class ModelResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/models/{id}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteModel(@PathVariable Long id) {
         log.debug("REST request to delete Model : {}", id);
         modelService.delete(id);

@@ -9,6 +9,7 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './active-rent.reducer';
 import { IActiveRent } from 'app/shared/model/active-rent.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import moment from "moment";
 
 export interface IActiveRentDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -28,7 +29,7 @@ export const ActiveRentDetail = (props: IActiveRentDetailProps) => {
           <dt>
             <span id="duration">Duration</span>
           </dt>
-          <dd>{activeRentEntity.duration}</dd>
+          <dd>{moment.duration(activeRentEntity.duration).asMinutes()} min</dd>
           <dt>Client</dt>
           <dd>{activeRentEntity.client ? activeRentEntity.client.login : ''}</dd>
           <dt>Car</dt>

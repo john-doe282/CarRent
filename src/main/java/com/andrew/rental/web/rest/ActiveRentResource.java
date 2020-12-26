@@ -1,7 +1,10 @@
 package com.andrew.rental.web.rest;
 
 import com.andrew.rental.domain.ActiveRent;
+import com.andrew.rental.domain.Car;
+import com.andrew.rental.domain.User;
 import com.andrew.rental.service.ActiveRentService;
+import com.andrew.rental.service.UserService;
 import com.andrew.rental.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -24,6 +27,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import static com.andrew.rental.security.SecurityUtils.getCurrentUserLogin;
+
 /**
  * REST controller for managing {@link com.andrew.rental.domain.ActiveRent}.
  */
@@ -40,8 +45,12 @@ public class ActiveRentResource {
 
     private final ActiveRentService activeRentService;
 
-    public ActiveRentResource(ActiveRentService activeRentService) {
+    private final UserService userService;
+
+    public ActiveRentResource(ActiveRentService activeRentService,
+                              UserService userService) {
         this.activeRentService = activeRentService;
+        this.userService = userService;
     }
 
     /**
@@ -57,6 +66,12 @@ public class ActiveRentResource {
         if (activeRent.getId() != null) {
             throw new BadRequestAlertException("A new activeRent cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (!user.isPresent()) {
+            throw new BadRequestAlertException("Log in first", ENTITY_NAME, "forbidden");
+        }
+
+        activeRent.setClient(user.get());
         ActiveRent result = activeRentService.save(activeRent);
         return ResponseEntity.created(new URI("/api/active-rents/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -78,6 +93,12 @@ public class ActiveRentResource {
         if (activeRent.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (!user.isPresent()) {
+            throw new BadRequestAlertException("Log in first", ENTITY_NAME, "forbidden");
+        }
+
+        activeRent.setClient(user.get());
         ActiveRent result = activeRentService.save(activeRent);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, activeRent.getId().toString()))
@@ -93,7 +114,11 @@ public class ActiveRentResource {
     @GetMapping("/active-rents")
     public ResponseEntity<List<ActiveRent>> getAllActiveRents(Pageable pageable) {
         log.debug("REST request to get a page of ActiveRents");
-        Page<ActiveRent> page = activeRentService.findAll(pageable);
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (!user.isPresent()) {
+            throw new BadRequestAlertException("Log in first", ENTITY_NAME, "forbidden");
+        }
+        Page<ActiveRent> page = activeRentService.findAllByUser(pageable, user.get());
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -120,6 +145,17 @@ public class ActiveRentResource {
     @DeleteMapping("/active-rents/{id}")
     public ResponseEntity<Void> deleteActiveRent(@PathVariable Long id) {
         log.debug("REST request to delete ActiveRent : {}", id);
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (!user.isPresent()) {
+            throw new BadRequestAlertException("Log in", ENTITY_NAME, "forbidden");
+        }
+
+        ActiveRent rent = activeRentService.findOne(id).get();
+        if (!user.get().getLogin().
+            equalsIgnoreCase(rent.getClient().getLogin())) {
+            throw new BadRequestAlertException("Forbidden", ENTITY_NAME, "forbidden");
+        }
+
         activeRentService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }

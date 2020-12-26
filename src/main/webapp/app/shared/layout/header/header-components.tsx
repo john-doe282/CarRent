@@ -3,6 +3,7 @@ import React from 'react';
 import { NavItem, NavLink, NavbarBrand } from 'reactstrap';
 import { NavLink as Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAddressBook } from '@fortawesome/free-solid-svg-icons'
 
 import appConfig from 'app/config/constants';
 
@@ -25,6 +26,15 @@ export const Home = props => (
     <NavLink tag={Link} to="/" className="d-flex align-items-center">
       <FontAwesomeIcon icon="home" />
       <span>Home</span>
+    </NavLink>
+  </NavItem>
+);
+
+export const Rents = props => (
+  <NavItem>
+    <NavLink tag={Link} to="/active-rent" className="d-flex align-items-center">
+      <FontAwesomeIcon icon={faAddressBook} />
+      <span>Rents</span>
     </NavLink>
   </NavItem>
 );

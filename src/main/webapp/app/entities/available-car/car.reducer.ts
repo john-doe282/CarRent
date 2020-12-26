@@ -102,7 +102,7 @@ const apiUrl = 'api/cars';
 // Actions
 
 export const getEntities: ICrudGetAllAction<ICar> = (page, size, sort) => {
-  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  const requestUrl = `${apiUrl}/available${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_CAR_LIST,
     payload: axios.get<ICar>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`),

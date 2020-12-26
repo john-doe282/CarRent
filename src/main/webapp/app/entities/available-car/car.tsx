@@ -4,9 +4,12 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
 import { ICrudGetAllAction, getSortState, IPaginationBaseState, JhiPagination, JhiItemCount } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Select from 'react-select'
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './car.reducer';
+import {getEntities as getModels} from 'app/entities/model/model.reducer';
+import {getEntities as getLocations} from 'app/entities/location/location.reducer';
 import { ICar } from 'app/shared/model/car.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
@@ -21,6 +24,8 @@ export const Car = (props: ICarProps) => {
 
   const getAllEntities = () => {
     props.getEntities(paginationState.activePage - 1, paginationState.itemsPerPage, `${paginationState.sort},${paginationState.order}`);
+    props.getLocations()
+    props.getModels()
   };
 
   const sortEntities = () => {
@@ -64,24 +69,29 @@ export const Car = (props: ICarProps) => {
       activePage: currentPage,
     });
 
-  const { carList, match, loading, totalItems } = props;
+  const { carList, match, loading, totalItems, locations } = props;
+
+  const [selectedLocation, setSelectedLocations] = useState({ value: 0, label: 'all' });
+  let options = [{value: 0, label: 'all'}]
+  options = options.concat(locations.map(location => {
+    return {value: location.id, label: location.district}
+  }))
   return (
     <div>
       <h2 id="car-heading">
-        Cars
-        <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-          <FontAwesomeIcon icon="plus" />
-          &nbsp; Create new Car
-        </Link>
+        Available Cars
       </h2>
+      <Select
+        onChange={value => {
+          setSelectedLocations(value);
+        }}
+        options={options}
+      />
       <div className="table-responsive">
         {carList && carList.length > 0 ? (
           <Table responsive>
             <thead>
               <tr>
-                <th className="hand" onClick={sort('id')}>
-                  ID <FontAwesomeIcon icon="sort" />
-                </th>
                 <th className="hand" onClick={sort('description')}>
                   Description <FontAwesomeIcon icon="sort" />
                 </th>
@@ -107,13 +117,10 @@ export const Car = (props: ICarProps) => {
               </tr>
             </thead>
             <tbody>
-              {carList.map((car, i) => (
+              {carList.
+              filter(car => selectedLocation.label === 'all' || car.location.id === selectedLocation.value).
+              map((car, i) => (
                 <tr key={`entity-${i}`}>
-                  <td>
-                    <Button tag={Link} to={`${match.url}/${car.id}`} color="link" size="sm">
-                      {car.id}
-                    </Button>
-                  </td>
                   <td>{car.description}</td>
                   <td>{car.status}</td>
                   <td>{car.pricePerHour}</td>
@@ -128,19 +135,11 @@ export const Car = (props: ICarProps) => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`${match.url}/${car.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`${match.url}/${car.id}/rent?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="primary"
                         size="sm"
                       >
-                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`${match.url}/${car.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="danger"
-                        size="sm"
-                      >
-                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Rent</span>
                       </Button>
                     </div>
                   </td>
@@ -174,14 +173,19 @@ export const Car = (props: ICarProps) => {
   );
 };
 
-const mapStateToProps = ({ car }: IRootState) => ({
-  carList: car.entities,
-  loading: car.loading,
-  totalItems: car.totalItems,
+const mapStateToProps = (state: IRootState) => ({
+
+  carList: state.car.entities,
+  loading: state.car.loading,
+  totalItems: state.car.totalItems,
+  locations: state.location.entities,
+  models: state.model.entities,
 });
 
 const mapDispatchToProps = {
   getEntities,
+  getLocations,
+  getModels,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

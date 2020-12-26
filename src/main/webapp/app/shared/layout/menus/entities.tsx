@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink as Link } from 'react-router-dom';
 import { NavDropdown } from './menu-components';
 
-export const EntitiesMenu = props => (
-  <NavDropdown icon="th-list" name="Entities" id="entity-menu" style={{ maxHeight: '80vh', overflow: 'auto' }}>
+const AdminEntityItems = (
+  <>
     <MenuItem icon="asterisk" to="/location">
       Location
     </MenuItem>
@@ -17,12 +17,18 @@ export const EntitiesMenu = props => (
     <MenuItem icon="asterisk" to="/type">
       Type
     </MenuItem>
+  </>
+)
+
+export const EntitiesMenu = props => (
+  <NavDropdown icon="th-list" name="Cars" id="entity-menu" style={{ maxHeight: '80vh', overflow: 'auto' }}>
+
+    {props.isAuthenticated && props.isAdmin && AdminEntityItems}
     <MenuItem icon="asterisk" to="/car">
-      Car
+      Your Cars
     </MenuItem>
-    <MenuItem icon="asterisk" to="/active-rent">
-      Active Rent
+    <MenuItem icon="asterisk" to="/available-car">
+      Available Cars
     </MenuItem>
-    {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );
