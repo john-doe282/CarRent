@@ -38,7 +38,7 @@ export const App = (props: IAppProps) => {
             isAuthenticated={props.isAuthenticated}
             isAdmin={props.isAdmin}
             ribbonEnv={props.ribbonEnv}
-            isInProduction={props.isInProduction}
+            isInProduction={true}
             isSwaggerEnabled={props.isSwaggerEnabled}
           />
         </ErrorBoundary>

@@ -16,7 +16,7 @@ export const Home = (props: IHomeProp) => {
   return (
     <Row>
       <Col md="9">
-        <h2>Welcome, Java Hipster!</h2>
+        <h2>Welcome to Car Rental Service!</h2>
         <p className="lead">This is your homepage</p>
         {account && account.login ? (
           <div>
@@ -25,16 +25,12 @@ export const Home = (props: IHomeProp) => {
         ) : (
           <div>
             <Alert color="warning">
-              If you want to
+              If you want to use this service, you need to be
               <Link to="/login" className="alert-link">
                 {' '}
-                sign in
+                signed in
               </Link>
-              , you can try the default accounts:
-              <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
-              <br />- User (login=&quot;user&quot; and password=&quot;user&quot;).
             </Alert>
-
             <Alert color="warning">
               You do not have an account yet?&nbsp;
               <Link to="/account/register" className="alert-link">
@@ -43,42 +39,24 @@ export const Home = (props: IHomeProp) => {
             </Alert>
           </div>
         )}
-        <p>If you have any question on JHipster:</p>
+        <p>If you have any suggestions or complains, please contact us:</p>
 
         <ul>
           <li>
-            <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">
-              JHipster homepage
+            <a href="https://github.com/john-doe282/CarRent/issues" target="_blank" rel="noopener noreferrer">
+              Car rental bug tracker
             </a>
           </li>
           <li>
-            <a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">
-              JHipster on Stack Overflow
-            </a>
+            Send email at:
+            <a href="mailto: qwerty@gmail.com">  qwerty@gmail.com</a>
           </li>
           <li>
-            <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer">
-              JHipster bug tracker
-            </a>
-          </li>
-          <li>
-            <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-              JHipster public chat room
-            </a>
-          </li>
-          <li>
-            <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">
-              follow @jhipster on Twitter
-            </a>
+            Call center:
+            <a href="tel: (044) 456 32 24">  (044) 456 32 24</a>
           </li>
         </ul>
-
         <p>
-          If you like JHipster, do not forget to give us a star on{' '}
-          <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-            Github
-          </a>
-          !
         </p>
       </Col>
       <Col md="3" className="pad">

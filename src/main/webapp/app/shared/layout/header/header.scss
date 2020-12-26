@@ -6,7 +6,7 @@ $header-color-hover: darken($header-color, 20%);
 Navbar styles
 ========================================================================== */
 .navbar-version {
-  font-size: 10px;
+  font-size: 15px;
   color: $header-color-secondary;
   padding: 0 0 0 10px;
 }
@@ -17,10 +17,11 @@ Navbar styles
   }
   .brand-icon {
     height: 35px;
-    width: auto;
+    width: 50px;
     display: inline-block;
     img {
       height: 45px;
+      width: 100%;
     }
   }
 }
