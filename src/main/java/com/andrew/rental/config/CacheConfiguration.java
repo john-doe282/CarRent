@@ -50,6 +50,9 @@ public class CacheConfiguration {
             createCache(cm, com.andrew.rental.domain.User.class.getName() + ".authorities");
             createCache(cm, com.andrew.rental.domain.PersistentToken.class.getName());
             createCache(cm, com.andrew.rental.domain.User.class.getName() + ".persistentTokens");
+            createCache(cm, com.andrew.rental.domain.Location.class.getName());
+            createCache(cm, com.andrew.rental.domain.Model.class.getName());
+            createCache(cm, com.andrew.rental.domain.Type.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
