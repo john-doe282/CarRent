@@ -84,6 +84,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "reset_date")
     private Instant resetDate = null;
 
+    @Column(name = "iban")
+    private String iban;
+
+    @Column(name = "licence")
+    private String licence;
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(
@@ -109,6 +115,22 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public String getLogin() {
         return login;
+    }
+
+    public void setIban(String iban) {
+        this.iban = iban;
+    }
+
+    public String getIban() {
+        return iban;
+    }
+
+    public void setLicence(String licence) {
+        this.licence = licence;
+    }
+
+    public String getLicence() {
+        return licence;
     }
 
     // Lowercase the login before saving it in database

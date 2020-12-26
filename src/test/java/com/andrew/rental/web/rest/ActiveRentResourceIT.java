@@ -178,7 +178,7 @@ public class ActiveRentResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(activeRent.getId().intValue())))
             .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getActiveRent() throws Exception {
@@ -204,7 +204,7 @@ public class ActiveRentResourceIT {
     @Transactional
     public void updateActiveRent() throws Exception {
         // Initialize the database
-        activeRentService.save(activeRent);
+        activeRentService.rent(activeRent);
 
         int databaseSizeBeforeUpdate = activeRentRepository.findAll().size();
 
@@ -247,7 +247,7 @@ public class ActiveRentResourceIT {
     @Transactional
     public void deleteActiveRent() throws Exception {
         // Initialize the database
-        activeRentService.save(activeRent);
+        activeRentService.rent(activeRent);
 
         int databaseSizeBeforeDelete = activeRentRepository.findAll().size();
 

@@ -50,6 +50,10 @@ public class UserDTO {
 
     private Set<String> authorities;
 
+    private String iban;
+
+    private String licence;
+
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -67,6 +71,8 @@ public class UserDTO {
         this.createdDate = user.getCreatedDate();
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
+        this.iban = user.getIban();
+        this.licence = user.getLicence();
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
@@ -94,6 +100,22 @@ public class UserDTO {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getLicence() {
+        return licence;
+    }
+
+    public void setLicence(String licence) {
+        this.licence = licence;
+    }
+
+    public String getIban() {
+        return iban;
+    }
+
+    public void setIban(String iban) {
+        this.iban = iban;
     }
 
     public String getLastName() {

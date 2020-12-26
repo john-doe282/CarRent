@@ -40,6 +40,11 @@ public class CarService {
         return carRepository.save(car);
     }
 
+    public Car setStatusById(Long id, CarStatus status) {
+        Optional<Car> car = carRepository.findById(id);
+        car.get().status(status);
+        return carRepository.save(car.get());
+    }
     /**
      * Get all the cars.
      *

@@ -1,7 +1,6 @@
 package com.andrew.rental.web.rest;
 
 import com.andrew.rental.domain.ActiveRent;
-import com.andrew.rental.domain.Car;
 import com.andrew.rental.domain.User;
 import com.andrew.rental.service.ActiveRentService;
 import com.andrew.rental.service.UserService;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +24,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-
-import static com.andrew.rental.security.SecurityUtils.getCurrentUserLogin;
 
 /**
  * REST controller for managing {@link com.andrew.rental.domain.ActiveRent}.
@@ -72,7 +68,12 @@ public class ActiveRentResource {
         }
 
         activeRent.setClient(user.get());
-        ActiveRent result = activeRentService.save(activeRent);
+        ActiveRent result = null;
+        try {
+            result = activeRentService.rent(activeRent);
+        } catch (IllegalAccessException e) {
+            throw new BadRequestAlertException(e.getMessage(), ENTITY_NAME, "forbidden");
+        }
         return ResponseEntity.created(new URI("/api/active-rents/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -99,7 +100,13 @@ public class ActiveRentResource {
         }
 
         activeRent.setClient(user.get());
-        ActiveRent result = activeRentService.save(activeRent);
+        ActiveRent result = null;
+        try {
+            result = activeRentService.rent(activeRent);
+        } catch (IllegalAccessException e) {
+            throw new BadRequestAlertException(e.getMessage(),
+                ENTITY_NAME, "bad request");
+        }
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, activeRent.getId().toString()))
             .body(result);
@@ -156,7 +163,12 @@ public class ActiveRentResource {
             throw new BadRequestAlertException("Forbidden", ENTITY_NAME, "forbidden");
         }
 
-        activeRentService.delete(id);
+        try {
+            activeRentService.closeRent(id);
+        } catch (IllegalAccessException e) {
+            throw new BadRequestAlertException("Bad request",
+                ENTITY_NAME, "bad request");
+        }
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
 }
