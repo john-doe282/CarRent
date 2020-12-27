@@ -70,7 +70,7 @@ export const ActiveRentUpdate = (props: IActiveRentUpdateProps) => {
             <AvForm model={isNew ? {} : activeRentEntity} onSubmit={saveEntity}>
               <AvGroup>
                 <Label id="durationLabel" for="active-rent-duration">
-                  Duration {props.match.params.id} {cars.length}
+                  Duration (hh:mm:ss)
                 </Label>
                 <AvField
                   id="active-rent-duration"

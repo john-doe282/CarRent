@@ -46,7 +46,7 @@ export const CarDetail = (props: ICarDetailProps) => {
           <dt>Owner</dt>
           <dd>{carEntity.owner ? carEntity.owner.login : ''}</dd>
         </dl>
-        <Button tag={Link} to="/car" replace color="info">
+        <Button tag={Link} to="/available-car" replace color="info">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
         </Button>
         &nbsp;

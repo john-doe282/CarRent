@@ -10,7 +10,7 @@ import { IRootState } from 'app/shared/reducers';
 import { IUser } from 'app/shared/model/user.model';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { ICar } from 'app/shared/model/car.model';
-import { getEntities as getCars } from 'app/entities/car/car.reducer';
+import { getEntities as getCars } from 'app/entities/available-car/car.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './active-rent.reducer';
 import { IActiveRent } from 'app/shared/model/active-rent.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -84,7 +84,7 @@ export const ActiveRentUpdate = (props: IActiveRentUpdateProps) => {
               ) : null}
               <AvGroup>
                 <Label id="durationLabel" for="active-rent-duration">
-                  Duration
+                  Duration (hh:mm:ss)
                 </Label>
                 <AvField
                   id="active-rent-duration"

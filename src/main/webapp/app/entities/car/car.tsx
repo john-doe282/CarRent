@@ -71,7 +71,7 @@ export const Car = (props: ICarProps) => {
         Cars
         <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
           <FontAwesomeIcon icon="plus" />
-          &nbsp; Create new Car
+          &nbsp; Add new Car
         </Link>
       </h2>
       <div className="table-responsive">
