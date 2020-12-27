@@ -30,9 +30,6 @@ export const ModelDetail = (props: IModelDetailProps) => {
           </dt>
           <dd>{modelEntity.name}</dd>
         </dl>
-        <Button tag={Link} to="/model" replace color="info">
-          <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
-        </Button>
         &nbsp;
         <Button tag={Link} to={`/model/${modelEntity.id}/edit`} replace color="primary">
           <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>

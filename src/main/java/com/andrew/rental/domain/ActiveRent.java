@@ -9,6 +9,7 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Duration;
+import java.time.Instant;
 
 /**
  * A ActiveRent.
@@ -28,6 +29,9 @@ public class ActiveRent implements Serializable {
     @NotNull
     @Column(name = "duration", nullable = false)
     private Duration duration;
+
+    @Column(name = "created_at")
+    private Instant createdAt;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -50,6 +54,14 @@ public class ActiveRent implements Serializable {
 
     public Duration getDuration() {
         return duration;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     public ActiveRent duration(Duration duration) {

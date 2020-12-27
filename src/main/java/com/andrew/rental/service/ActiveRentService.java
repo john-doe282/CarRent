@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.Optional;
 
 /**
@@ -87,6 +88,7 @@ public class ActiveRentService {
 
         carService.setStatusById(car.getId(), CarStatus.RENTED);
 
+        activeRent.setCreatedAt(Instant.now());
         log.debug("Request to save ActiveRent : {}", activeRent);
         return activeRentRepository.save(activeRent);
     }
@@ -132,6 +134,14 @@ public class ActiveRentService {
         Optional<ActiveRent> rent = activeRentRepository.findById(id);
         if (!rent.isPresent()) {
             throw new IllegalAccessException("Bad request");
+        }
+
+
+        if (Duration.between(Instant.now(), rent.get().getCreatedAt())
+            .compareTo(rent.get().getDuration()) > 0) {
+            BigDecimal fine = BigDecimal.valueOf(50);
+            paymentService.transaction("sender", "receiver",
+                fine);
         }
 
         carService.setStatusById(rent.get().getCar().getId(),
