@@ -34,7 +34,7 @@ export const ActiveRentDeleteDialog = (props: IActiveRentDeleteDialogProps) => {
   return (
     <Modal isOpen toggle={handleClose}>
       <ModalHeader toggle={handleClose}>Confirm delete operation</ModalHeader>
-      <ModalBody id="rentalApp.activeRent.delete.question">Are you sure you want to delete this ActiveRent?</ModalBody>
+      <ModalBody id="rentalApp.activeRent.delete.question">Are you sure you want to close this rent?</ModalBody>
       <ModalFooter>
         <Button color="secondary" onClick={handleClose}>
           <FontAwesomeIcon icon="ban" />
@@ -42,7 +42,7 @@ export const ActiveRentDeleteDialog = (props: IActiveRentDeleteDialogProps) => {
         </Button>
         <Button id="jhi-confirm-delete-activeRent" color="danger" onClick={confirmDelete}>
           <FontAwesomeIcon icon="trash" />
-          &nbsp; Delete
+          &nbsp; Yes
         </Button>
       </ModalFooter>
     </Modal>

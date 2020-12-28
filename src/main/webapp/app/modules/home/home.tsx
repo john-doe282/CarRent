@@ -39,7 +39,7 @@ export const Home = (props: IHomeProp) => {
             </Alert>
           </div>
         )}
-        <p>If you have any suggestions or complains, please contact us:</p>
+        <p>If you have any suggestions or complaints, please contact us:</p>
 
         <ul>
           <li>
