@@ -56,6 +56,9 @@ public class ActiveRentService {
     public ActiveRent rent(ActiveRent activeRent) throws IllegalAccessException {
 
 
+        if (activeRent.getDuration().isNegative() || activeRent.getDuration().isZero()) {
+            throw new IllegalAccessException("Duration can't be negative");
+        }
         Long carId = activeRent.getCar().getId();
         Long clientId = activeRent.getClient().getId();
 

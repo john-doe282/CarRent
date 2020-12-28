@@ -103,7 +103,7 @@ public class CarController {
     }
 
     /**
-     * {@code GET  /cars} : get all the cars.
+     * {@code GET  /cars/available} : get all the available cars.
      *
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of cars in body.
