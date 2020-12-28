@@ -85,8 +85,8 @@ export const SettingsPage = (props: IUserSettingsProps) => {
             />
             <AvField
               className="form-control"
-              name="Driver's licence"
-              label="Driver's licence"
+              name="licence"
+              label="licence"
               id="licence"
               placeholder="Your licence"
               value={props.account.licence}

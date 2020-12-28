@@ -58,7 +58,7 @@ export const saveAccountSettings: (account: any) => void = account => async disp
     type: ACTION_TYPES.UPDATE_ACCOUNT,
     payload: axios.post(apiUrl, account),
     meta: {
-      successMessage: '<strong>Settings saved!</strong>',
+      successMessage: 'Settings saved!',
     },
   });
 
