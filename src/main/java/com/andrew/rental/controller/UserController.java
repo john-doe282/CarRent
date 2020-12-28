@@ -59,10 +59,10 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/api")
-public class UserResource {
+public class UserController {
     private static final List<String> ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(Arrays.asList("id", "login", "firstName", "lastName", "email", "activated", "langKey"));
 
-    private final Logger log = LoggerFactory.getLogger(UserResource.class);
+    private final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -72,7 +72,7 @@ public class UserResource {
     private final UserRepository userRepository;
 
 
-    public UserResource(UserService userService, UserRepository userRepository) {
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
     }

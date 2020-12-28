@@ -24,12 +24,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@link LocationResource} REST controller.
+ * Integration tests for the {@link LocationController} REST controller.
  */
 @SpringBootTest(classes = RentalApp.class)
 @AutoConfigureMockMvc
 @WithMockUser
-public class LocationResourceIT {
+public class LocationControllerIT {
 
     private static final String DEFAULT_DISTRICT = "AAAAAAAAAA";
     private static final String UPDATED_DISTRICT = "BBBBBBBBBB";

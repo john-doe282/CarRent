@@ -102,6 +102,19 @@ export const CarUpdate = (props: ICarUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
+                <Label id="licenceLabel" for="car-licence">
+                  Vehicle registration number
+                </Label>
+                <AvField
+                  id="car-licence"
+                  type="text"
+                  name="licence"
+                  validate={{
+                    required: { value: true, errorMessage: 'This field is required.' },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
                 <Label id="statusLabel" for="car-status">
                   Status
                 </Label>
@@ -199,7 +212,7 @@ export const CarUpdate = (props: ICarUpdateProps) => {
               &nbsp;
               <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                 <FontAwesomeIcon icon="save" />
-                &nbsp; Save
+                &nbsp; Add
               </Button>
             </AvForm>
           )}

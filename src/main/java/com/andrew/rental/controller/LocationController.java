@@ -25,9 +25,9 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class LocationResource {
+public class LocationController {
 
-    private final Logger log = LoggerFactory.getLogger(LocationResource.class);
+    private final Logger log = LoggerFactory.getLogger(LocationController.class);
 
     private static final String ENTITY_NAME = "location";
 
@@ -36,7 +36,7 @@ public class LocationResource {
 
     private final LocationService locationService;
 
-    public LocationResource(LocationService locationService) {
+    public LocationController(LocationService locationService) {
         this.locationService = locationService;
     }
 

@@ -25,9 +25,9 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class TypeResource {
+public class TypeController {
 
-    private final Logger log = LoggerFactory.getLogger(TypeResource.class);
+    private final Logger log = LoggerFactory.getLogger(TypeController.class);
 
     private static final String ENTITY_NAME = "type";
 
@@ -36,7 +36,7 @@ public class TypeResource {
 
     private final TypeService typeService;
 
-    public TypeResource(TypeService typeService) {
+    public TypeController(TypeService typeService) {
         this.typeService = typeService;
     }
 

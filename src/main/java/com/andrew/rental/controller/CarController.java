@@ -30,9 +30,9 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class CarResource {
+public class CarController {
 
-    private final Logger log = LoggerFactory.getLogger(CarResource.class);
+    private final Logger log = LoggerFactory.getLogger(CarController.class);
 
     private static final String ENTITY_NAME = "car";
 
@@ -43,8 +43,8 @@ public class CarResource {
 
     private final UserService userService;
 
-    public CarResource(CarService carService,
-                       UserService userService) {
+    public CarController(CarService carService,
+                         UserService userService) {
         this.carService = carService;
         this.userService = userService;
     }

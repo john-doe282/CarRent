@@ -25,9 +25,9 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class ModelResource {
+public class ModelController {
 
-    private final Logger log = LoggerFactory.getLogger(ModelResource.class);
+    private final Logger log = LoggerFactory.getLogger(ModelController.class);
 
     private static final String ENTITY_NAME = "model";
 
@@ -36,7 +36,7 @@ public class ModelResource {
 
     private final ModelService modelService;
 
-    public ModelResource(ModelService modelService) {
+    public ModelController(ModelService modelService) {
         this.modelService = modelService;
     }
 

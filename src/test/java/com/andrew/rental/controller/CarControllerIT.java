@@ -30,12 +30,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.andrew.rental.domain.enumeration.CarStatus;
 /**
- * Integration tests for the {@link CarResource} REST controller.
+ * Integration tests for the {@link CarController} REST controller.
  */
 @SpringBootTest(classes = RentalApp.class)
 @AutoConfigureMockMvc
 @WithMockUser
-public class CarResourceIT {
+public class CarControllerIT {
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
@@ -74,7 +74,7 @@ public class CarResourceIT {
         // Add required entity
         Model model;
         if (TestUtil.findAll(em, Model.class).isEmpty()) {
-            model = ModelResourceIT.createEntity(em);
+            model = ModelControllerIT.createEntity(em);
             em.persist(model);
             em.flush();
         } else {
@@ -84,7 +84,7 @@ public class CarResourceIT {
         // Add required entity
         Type type;
         if (TestUtil.findAll(em, Type.class).isEmpty()) {
-            type = TypeResourceIT.createEntity(em);
+            type = TypeControllerIT.createEntity(em);
             em.persist(type);
             em.flush();
         } else {
@@ -94,7 +94,7 @@ public class CarResourceIT {
         // Add required entity
         Location location;
         if (TestUtil.findAll(em, Location.class).isEmpty()) {
-            location = LocationResourceIT.createEntity(em);
+            location = LocationControllerIT.createEntity(em);
             em.persist(location);
             em.flush();
         } else {
@@ -102,7 +102,7 @@ public class CarResourceIT {
         }
         car.setLocation(location);
         // Add required entity
-        User user = UserResourceIT.createEntity(em);
+        User user = UserControllerIT.createEntity(em);
         em.persist(user);
         em.flush();
         car.setOwner(user);
@@ -122,7 +122,7 @@ public class CarResourceIT {
         // Add required entity
         Model model;
         if (TestUtil.findAll(em, Model.class).isEmpty()) {
-            model = ModelResourceIT.createUpdatedEntity(em);
+            model = ModelControllerIT.createUpdatedEntity(em);
             em.persist(model);
             em.flush();
         } else {
@@ -132,7 +132,7 @@ public class CarResourceIT {
         // Add required entity
         Type type;
         if (TestUtil.findAll(em, Type.class).isEmpty()) {
-            type = TypeResourceIT.createUpdatedEntity(em);
+            type = TypeControllerIT.createUpdatedEntity(em);
             em.persist(type);
             em.flush();
         } else {
@@ -142,7 +142,7 @@ public class CarResourceIT {
         // Add required entity
         Location location;
         if (TestUtil.findAll(em, Location.class).isEmpty()) {
-            location = LocationResourceIT.createUpdatedEntity(em);
+            location = LocationControllerIT.createUpdatedEntity(em);
             em.persist(location);
             em.flush();
         } else {
@@ -150,7 +150,7 @@ public class CarResourceIT {
         }
         car.setLocation(location);
         // Add required entity
-        User user = UserResourceIT.createEntity(em);
+        User user = UserControllerIT.createEntity(em);
         em.persist(user);
         em.flush();
         car.setOwner(user);

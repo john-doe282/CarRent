@@ -42,7 +42,7 @@ export const CarDeleteDialog = (props: ICarDeleteDialogProps) => {
         </Button>
         <Button id="jhi-confirm-delete-car" color="danger" onClick={confirmDelete}>
           <FontAwesomeIcon icon="trash" />
-          &nbsp; Delete
+          &nbsp; Remove
         </Button>
       </ModalFooter>
     </Modal>

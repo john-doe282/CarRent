@@ -27,12 +27,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@link ActiveRentResource} REST controller.
+ * Integration tests for the {@link ActiveRentController} REST controller.
  */
 @SpringBootTest(classes = RentalApp.class)
 @AutoConfigureMockMvc
 @WithMockUser
-public class ActiveRentResourceIT {
+public class ActiveRentControllerIT {
 
     private static final Duration DEFAULT_DURATION = Duration.ofHours(6);
     private static final Duration UPDATED_DURATION = Duration.ofHours(12);
@@ -61,14 +61,14 @@ public class ActiveRentResourceIT {
         ActiveRent activeRent = new ActiveRent()
             .duration(DEFAULT_DURATION);
         // Add required entity
-        User user = UserResourceIT.createEntity(em);
+        User user = UserControllerIT.createEntity(em);
         em.persist(user);
         em.flush();
         activeRent.setClient(user);
         // Add required entity
         Car car;
         if (TestUtil.findAll(em, Car.class).isEmpty()) {
-            car = CarResourceIT.createEntity(em);
+            car = CarControllerIT.createEntity(em);
             em.persist(car);
             em.flush();
         } else {
@@ -87,14 +87,14 @@ public class ActiveRentResourceIT {
         ActiveRent activeRent = new ActiveRent()
             .duration(UPDATED_DURATION);
         // Add required entity
-        User user = UserResourceIT.createEntity(em);
+        User user = UserControllerIT.createEntity(em);
         em.persist(user);
         em.flush();
         activeRent.setClient(user);
         // Add required entity
         Car car;
         if (TestUtil.findAll(em, Car.class).isEmpty()) {
-            car = CarResourceIT.createUpdatedEntity(em);
+            car = CarControllerIT.createUpdatedEntity(em);
             em.persist(car);
             em.flush();
         } else {

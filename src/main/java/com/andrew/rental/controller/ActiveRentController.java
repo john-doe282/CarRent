@@ -30,9 +30,9 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class ActiveRentResource {
+public class ActiveRentController {
 
-    private final Logger log = LoggerFactory.getLogger(ActiveRentResource.class);
+    private final Logger log = LoggerFactory.getLogger(ActiveRentController.class);
 
     private static final String ENTITY_NAME = "activeRent";
 
@@ -43,8 +43,8 @@ public class ActiveRentResource {
 
     private final UserService userService;
 
-    public ActiveRentResource(ActiveRentService activeRentService,
-                              UserService userService) {
+    public ActiveRentController(ActiveRentService activeRentService,
+                                UserService userService) {
         this.activeRentService = activeRentService;
         this.userService = userService;
     }

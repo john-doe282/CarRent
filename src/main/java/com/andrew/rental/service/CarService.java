@@ -25,8 +25,12 @@ public class CarService {
 
     private final CarRepository carRepository;
 
-    public CarService(CarRepository carRepository) {
+    private final PoliceService policeService;
+
+    public CarService(CarRepository carRepository,
+                      PoliceService policeService) {
         this.carRepository = carRepository;
+        this.policeService = policeService;
     }
 
     /**
@@ -93,5 +97,9 @@ public class CarService {
         log.debug("Request to get all Cars");
 
         return carRepository.findAllByOwner(pageable, owner);
+    }
+
+    public boolean checkCar(Car car) {
+        return policeService.eligible(car);
     }
 }

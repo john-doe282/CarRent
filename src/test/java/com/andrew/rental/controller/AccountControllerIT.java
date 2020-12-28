@@ -30,18 +30,18 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static com.andrew.rental.controller.AccountResourceIT.TEST_USER_LOGIN;
+import static com.andrew.rental.controller.AccountControllerIT.TEST_USER_LOGIN;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@link AccountResource} REST controller.
+ * Integration tests for the {@link AccountController} REST controller.
  */
 @AutoConfigureMockMvc
 @WithMockUser(value = TEST_USER_LOGIN)
 @SpringBootTest(classes = RentalApp.class)
-public class AccountResourceIT {
+public class AccountControllerIT {
     static final String TEST_USER_LOGIN = "test";
 
     @Autowired

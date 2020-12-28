@@ -68,6 +68,10 @@ public class ActiveRentService {
             throw new IllegalAccessException("The car is not available");
         }
 
+        if (!carService.checkCar(car)) {
+            throw new IllegalAccessException("The car is not eligible for renting");
+        }
+
         User owner = car.getOwner();
 
         Duration duration = activeRent.getDuration();

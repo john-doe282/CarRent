@@ -31,7 +31,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/api")
-public class AccountResource {
+public class AccountController {
 
     private static class AccountResourceException extends RuntimeException {
         private AccountResourceException(String message) {
@@ -39,7 +39,7 @@ public class AccountResource {
         }
     }
 
-    private final Logger log = LoggerFactory.getLogger(AccountResource.class);
+    private final Logger log = LoggerFactory.getLogger(AccountController.class);
 
     private final UserRepository userRepository;
 
@@ -47,7 +47,7 @@ public class AccountResource {
 
     private final PersistentTokenRepository persistentTokenRepository;
 
-    public AccountResource(UserRepository userRepository, UserService userService, PersistentTokenRepository persistentTokenRepository) {
+    public AccountController(UserRepository userRepository, UserService userService, PersistentTokenRepository persistentTokenRepository) {
 
         this.userRepository = userRepository;
         this.userService = userService;

@@ -41,6 +41,9 @@ public class Car implements Serializable {
     @Column(name = "price_per_hour", precision = 21, scale = 2, nullable = false)
     private BigDecimal pricePerHour;
 
+    @Column(name = "licence")
+    private String licence;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = "cars", allowSetters = true)
@@ -77,6 +80,14 @@ public class Car implements Serializable {
     public Car description(String description) {
         this.description = description;
         return this;
+    }
+
+    public void setLicence(String licence) {
+        this.licence = licence;
+    }
+
+    public String getLicence() {
+        return licence;
     }
 
     public void setDescription(String description) {

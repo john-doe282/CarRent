@@ -26,6 +26,7 @@
     <include file="config/liquibase/changelog/20201227092448_changed_entity_constraints_Car.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20201227092458_added_fields_User.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20201227092499_added_fields_ActiveRent.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201227092899_added_fields_Car.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

@@ -24,12 +24,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@link ModelResource} REST controller.
+ * Integration tests for the {@link ModelController} REST controller.
  */
 @SpringBootTest(classes = RentalApp.class)
 @AutoConfigureMockMvc
 @WithMockUser
-public class ModelResourceIT {
+public class ModelControllerIT {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";

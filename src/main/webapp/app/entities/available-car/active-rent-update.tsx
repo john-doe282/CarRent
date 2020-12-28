@@ -109,7 +109,7 @@ export const ActiveRentUpdate = (props: IActiveRentUpdateProps) => {
               &nbsp;
               <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                 <FontAwesomeIcon icon="save" />
-                &nbsp; Save
+                &nbsp; Rent
               </Button>
             </AvForm>
           )}
